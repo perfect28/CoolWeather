@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.kkpanda.coolweather.R;
+import com.example.kkpanda.coolweather.service.AutoUpdateService;
 import com.example.kkpanda.coolweather.util.HttpCallbackListener;
 import com.example.kkpanda.coolweather.util.HttpUtil;
 import com.example.kkpanda.coolweather.util.Utility;
@@ -100,6 +102,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
                 if (!TextUtils.isEmpty(weatherCode)) {
                     queryWeatherInfo(weatherCode);
                 }
+                //Log.d("IS_FROM_WEATHER",String.valueOf(prefs.getBoolean("from_weather_activity",false)));
                 break;
             default:
                 break;
@@ -185,6 +188,9 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         currentDateText.setText(prefs.getString("current_date", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
+
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 
     @Override

@@ -75,28 +75,28 @@ public class ChooseAreaActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences prefs = PreferenceManager.
-                getDefaultSharedPreferences(this);
-        if (prefs.getBoolean("city_selected", false)) {
-            Intent intent = new Intent(this, WeatherActivity.class);
-            startActivity(intent);
-            finish();
-            return;
-        }
-        setContentView(R.layout.activity_choose_area);
-
-//        isFromWeatherActivity = getIntent().getBooleanExtra("from_weather_activity", false);
 //        SharedPreferences prefs = PreferenceManager.
 //                getDefaultSharedPreferences(this);
-//        Log.d("TAG", String.valueOf(prefs.getBoolean("city_selected", false)));
-//        // 已经选择了城市且不是从WeatherActivity跳转过来，才会直接跳转到WeatherActivity
-//        if (prefs.getBoolean("city_selected", false) && !isFromWeatherActivity) {
+//        if (prefs.getBoolean("city_selected", false)) {
 //            Intent intent = new Intent(this, WeatherActivity.class);
 //            startActivity(intent);
 //            finish();
 //            return;
 //        }
 
+
+        isFromWeatherActivity = getIntent().getBooleanExtra("from_weather_activity", false);
+        SharedPreferences prefs = PreferenceManager.
+                getDefaultSharedPreferences(this);
+        // 已经选择了城市且不是从WeatherActivity跳转过来，才会直接跳转到WeatherActivity
+        if (prefs.getBoolean("city_selected", false) && !isFromWeatherActivity) {
+            Intent intent = new Intent(this, WeatherActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        setContentView(R.layout.activity_choose_area);
         listView = (ListView) findViewById(R.id.list_view);
         titleText = (TextView) findViewById(R.id.title_text);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
